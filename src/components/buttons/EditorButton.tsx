@@ -1,6 +1,6 @@
-import useEditorCommands from '@/hooks/useEditorCommands';
-import React from 'react';
-import { TEditor, TEditorButton } from '../../../types';
+import editorCommands from "@/helpers/editorCommands";
+import { TEditor, TEditorButton } from "@/types";
+import React from "react";
 
 interface EditorButtonProps {
   editor: TEditor;
@@ -9,7 +9,7 @@ interface EditorButtonProps {
 }
 
 const EditorButton = ({ editor, button, icon }: EditorButtonProps) => {
-  const commands = useEditorCommands(editor);
+  const commands = editorCommands(editor);
   const command = commands[button];
   const handler = command.onclick;
   const isActive = command.active(button);
@@ -17,9 +17,10 @@ const EditorButton = ({ editor, button, icon }: EditorButtonProps) => {
 
   return (
     <button
-      className={`join-item btn rounded-none  ${isActive ? 'bg-primary' : ''}`}
+      className={`join-item btn rounded-none  ${isActive ? "bg-primary" : ""}`}
       onClick={handler}
-      disabled={isDisabled}>
+      disabled={isDisabled}
+    >
       <i className={`fa-solid fa-${!icon ? button : icon} text-base`}></i>
     </button>
   );
