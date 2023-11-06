@@ -9,7 +9,7 @@ type Commands = {
   [K in TEditorButton]: Command;
 };
 
-const useEditorCommands = (editor: TEditor): Commands => {
+const editorCommands = (editor: TEditor): Commands => {
   const commands = {
     bold: {
       onclick: () => editor.chain().focus().toggleBold().run(),
@@ -100,4 +100,4 @@ const useEditorCommands = (editor: TEditor): Commands => {
   return commands;
 };
 
-export default useEditorCommands;
+export default editorCommands;
