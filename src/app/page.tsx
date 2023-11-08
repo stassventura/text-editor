@@ -1,15 +1,12 @@
 "use client";
 import "../styles/globals.css";
+import { BubbleMenu, EditorContent } from "@tiptap/react";
+import Loader from "@/components/loader";
 import useTipTap from "@/hooks/useTipTap";
-import { EditorContent } from "@tiptap/react";
 import Toolbar from "@/components/toolbar";
 import Themes from "@/components/Themes";
-import Loader from "@/components/loader";
-import { BubbleMenu } from "@tiptap/react";
-import { useState, useRef } from "react";
-import { useClickOutside } from "@mantine/hooks";
 
-const HomePage = () => {
+function HomePage() {
   const { editor, addComment } = useTipTap();
 
   if (!editor) {
@@ -46,6 +43,6 @@ const HomePage = () => {
       </div>
     </>
   );
-};
+}
 
 export default HomePage;

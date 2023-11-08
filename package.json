@@ -9,10 +9,6 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@mantine/hooks": "^7.2.0",
-    "@nextui-org/react": "^2.2.3",
-    "@rcode-link/tiptap-comments": "^1.0.2",
-    "@sereneinserenade/tiptap-comment-extension": "^0.0.6",
     "@tiptap/core": "^2.1.12",
     "@tiptap/extension-blockquote": "^2.1.12",
     "@tiptap/extension-bold": "^2.1.12",

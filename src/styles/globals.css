@@ -35,7 +35,7 @@ ol {
 .ProseMirror {
   padding: 10px;
   /* border: 1px solid #ee5; */
-  @apply border border-primary;
+  @apply border border-accent;
   border-radius: 4px;
   outline: none;
 }
@@ -179,13 +179,4 @@ blockquote {
   position: absolute;
   top: calc(50% - 1.25em);
   left: calc(50% - 1.25em);
-}
-
-span[data-comment] {
-  background: rgba(172, 255, 47, 0.5);
-}
-
-span[data-comment]::after {
-  content: " 💬";
-  user-select: all;
 }

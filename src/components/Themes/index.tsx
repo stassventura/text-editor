@@ -1,7 +1,6 @@
-import useTheme from '@/hooks/useTheme';
-import React from 'react';
-
-const themes = ['light', 'dark', 'retro', 'bumblebee', 'garden'];
+import useTheme from "@/hooks/useTheme";
+import React from "react";
+const themes = ["light", "dark", "retro", "bumblebee", "garden"];
 
 const Themes = () => {
   const { changeTheme, theme } = useTheme();
@@ -15,12 +14,14 @@ const Themes = () => {
       <ul
         tabIndex={0}
         className="dropdown-content z-[1] menu p-2 rounded-sm w-32 shadow bg-base-100 border border-base-200"
-        data-type="heading">
+        data-type="heading"
+      >
         {themes.map((item, index) => (
           <li key={index}>
             <button
               onClick={() => changeTheme(item)}
-              className={`capitalize ${theme === item ? 'bg-primary' : ''}`}>
+              className={`capitalize ${theme === item ? "bg-primary" : ""}`}
+            >
               {item}
             </button>
           </li>

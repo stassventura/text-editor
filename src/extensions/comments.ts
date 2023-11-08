@@ -112,7 +112,7 @@ const Comments = Mark.create<CommentOptionsInterface, CommentsStorageInterface>(
         // @ts-ignore
         removeSpecificComment:
           (threadId: string, commentId: string) =>
-          ({ commands }) => {
+          ({ commands }: any) => {
             let comments = this.storage?.comments;
             const index = findIndex(comments, { threadId: threadId });
             if (comments[index].comments) {
