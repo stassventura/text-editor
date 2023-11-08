@@ -5,9 +5,12 @@ import { EditorContent } from "@tiptap/react";
 import Toolbar from "@/components/toolbar";
 import Themes from "@/components/Themes";
 import Loader from "@/components/loader";
+import { BubbleMenu } from "@tiptap/react";
+import { useState, useRef } from "react";
+import { useClickOutside } from "@mantine/hooks";
 
 const HomePage = () => {
-  const { editor } = useTipTap();
+  const { editor, addComment } = useTipTap();
 
   if (!editor) {
     return <Loader />;
@@ -27,8 +30,19 @@ const HomePage = () => {
           </button>
         </div>
       </div>
-      <div className="max-w-7xl mx-auto mt-4">
-        <EditorContent editor={editor} />
+      <div className="max-w-7xl mx-auto mt-4 flex gap-3">
+        <div className="w-[70%]">
+          <EditorContent editor={editor} />
+          <BubbleMenu editor={editor} tippyOptions={{ duration: 100 }}>
+            <span className="bg-base-100 shadow p-2 rounded">hello world</span>
+          </BubbleMenu>
+        </div>
+        <button
+          onClick={() => addComment("First comment", null)}
+          className="btn"
+        >
+          Add comment
+        </button>
       </div>
     </>
   );

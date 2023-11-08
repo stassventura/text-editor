@@ -1,4 +1,4 @@
-import ThemeProvider from "@/components/ThemeProvider";
+import ThemeProvider from "@/providers/ThemeProvider";
 import Script from "next/script";
 
 export const metadata = {
