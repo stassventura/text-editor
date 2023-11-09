@@ -19,6 +19,8 @@ import Document from "@tiptap/extension-document";
 import Paragraph from "@tiptap/extension-paragraph";
 import Heading from "@tiptap/extension-heading";
 import Comments from "@/extensions/comments";
+import { useState } from "react";
+import { v4 as uuidv4 } from "uuid";
 
 const useTipTap = () => {
   const editor = useEditor({
@@ -46,9 +48,11 @@ const useTipTap = () => {
       History,
       Comments.configure({
         user: {
+          id: "8954385430",
           firstName: "Jason",
           lastName: "Benson",
-          id: "8954385430",
+          avatar:
+            "https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg",
         },
       }),
     ],
@@ -63,19 +67,77 @@ const useTipTap = () => {
         `,
   });
 
-  const addComment = (comment: string, parent_id: string | null) => {
+  const [editingCommentId, setEditingCommentId] = useState<string | null>(null);
+  const addComment = () => {
     if (editor) {
+      const { from, to } = editor.state.selection;
+      const quote = editor.state.doc.textBetween(from, to);
+      const newCommentUuid = uuidv4();
+
       editor.commands.addComments({
-        comment: comment,
-        parent_id: parent_id,
+        uuid: newCommentUuid,
+        comment: "",
+        parent_id: null,
+        parent_title: quote,
       });
-      console.log(editor.storage.comment.comments);
+
+      setEditingCommentId(newCommentUuid);
     }
+  };
+
+  const updateComment = (
+    threadId: string,
+    commentId: string,
+    oldCommentText: string,
+    newCommentText: string
+  ) => {
+    if (editor && threadId && commentId && newCommentText !== null) {
+      if (oldCommentText !== "" && oldCommentText === newCommentText)
+        return setEditingCommentId(null);
+      const updated = editor.commands.updateSpecificComment(
+        threadId,
+        commentId,
+        newCommentText !== "" ? newCommentText : "Your text could be here"
+      );
+
+      if (updated) {
+        setEditingCommentId(null);
+      } else {
+        console.error("Failed to update the comment");
+      }
+    }
+  };
+
+  const selectMessage = (id: string) => {
+    setEditingCommentId(id);
+  };
+
+  const deleteComment = (threadId: string, commentId: string) => {
+    if (editor) {
+      editor.commands.removeSpecificComment(threadId, commentId);
+      setEditingCommentId(null);
+    }
+  };
+
+  const unselectMessage = (
+    threadId: string,
+    commentId: string,
+    commentText: string
+  ) => {
+    if (commentText !== "") return setEditingCommentId(null);
+    console.log(commentId);
+    if (editor && threadId && commentId !== null)
+      deleteComment(threadId, commentId);
   };
 
   return {
     editor,
     addComment,
+    editingCommentId,
+    updateComment,
+    setEditingCommentId,
+    selectMessage,
+    unselectMessage,
   };
 };
 

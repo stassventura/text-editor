@@ -1,4 +1,5 @@
 import { Mark, mergeAttributes } from "@tiptap/core";
+
 import { v4 as uuidv4 } from "uuid";
 import { findIndex } from "lodash";
 
@@ -14,6 +15,8 @@ export interface CommentInterface {
 export interface Comment {
   comment: string;
   parent_id: string | null;
+  parent_title: string;
+  uuid: string | null;
 }
 
 export interface CustomCommentInterface {
@@ -35,6 +38,11 @@ declare module "@tiptap/core" {
     customExtension: {
       addComments: (comment: Comment) => ReturnType;
       removeSpecificComment: (threadId: string, commentId: string) => boolean;
+      updateSpecificComment: (
+        threadId: string,
+        commentId: string,
+        newCommentText: string
+      ) => boolean;
     };
   }
 }
@@ -73,13 +81,14 @@ const Comments = Mark.create<CommentOptionsInterface, CommentsStorageInterface>(
             console.log({
               user: this.options.user,
             });
+
             const finalComment: CommentInterface = {
-              uuid: uuidv4(),
+              uuid: comment.uuid,
               user: this.options.user,
               comment: comment.comment,
               date: Date.now(),
-              parent_title: null,
-              parent_id: null,
+              parent_title: comment.parent_title,
+              parent_id: comment.parent_id,
             };
             if (comment.parent_id) {
               const index = findIndex(this.storage.comments, {
@@ -108,6 +117,8 @@ const Comments = Mark.create<CommentOptionsInterface, CommentsStorageInterface>(
               });
               this.storage.comments.push(commentsList);
             }
+
+            return finalComment.uuid;
           },
         // @ts-ignore
         removeSpecificComment:
@@ -146,6 +157,30 @@ const Comments = Mark.create<CommentOptionsInterface, CommentsStorageInterface>(
                 });
               });
             }
+            return true;
+          },
+
+        //
+        updateSpecificComment:
+          (threadId: string, commentId: string, newCommentText: string) =>
+          () => {
+            let comments = this.storage.comments;
+            const threadIndex = findIndex(comments, { threadId: threadId });
+
+            if (threadIndex === -1) return false;
+
+            const commentIndex = findIndex(
+              comments[threadIndex].comments ?? [],
+              { uuid: commentId }
+            );
+
+            if (commentIndex === -1) return false;
+
+            comments[threadIndex].comments![commentIndex].comment =
+              newCommentText;
+
+            this.storage.comments = comments;
+
             return true;
           },
       };

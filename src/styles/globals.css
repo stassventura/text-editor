@@ -92,7 +92,13 @@ ul[data-type="taskList"] li::before {
   display: none;
   margin: 0;
 }
-
+span[comment_id] {
+  @apply bg-accent text-accent-content;
+}
+span[comment_id]::after {
+  content: " 💬";
+  user-select: all;
+}
 blockquote {
   @apply border-l-2 border-accent pl-3  my-3 ml-8;
 }
@@ -179,4 +185,9 @@ blockquote {
   position: absolute;
   top: calc(50% - 1.25em);
   left: calc(50% - 1.25em);
+}
+
+.div {
+  background-color: red;
+  padding: 2px;
 }
