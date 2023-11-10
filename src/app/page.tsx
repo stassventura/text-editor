@@ -15,8 +15,9 @@ function HomePage() {
     addComment,
     editingCommentId,
     updateComment,
-    selectMessage,
-    unselectMessage,
+    selectComment,
+    unselectComment,
+    deleteComment,
   } = useTipTap();
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
 
@@ -119,7 +120,7 @@ function HomePage() {
                                 <button
                                   className="btn-sm btn-error mt-2 rounded block ml-auto"
                                   onClick={() =>
-                                    unselectMessage(
+                                    unselectComment(
                                       thread.threadId,
                                       comment.uuid,
                                       comment.comment
@@ -150,12 +151,20 @@ function HomePage() {
                               <div className=" text-base-content font-medium mt-2">
                                 {comment.comment}
                               </div>
-                              <button
-                                className="absolute bottom-3 right-3"
-                                onClick={() => selectMessage(comment.uuid)}
-                              >
-                                <i className="fa-solid fa-pen"></i>
-                              </button>
+                              <div className="absolute bottom-3 right-3 flex gap-5">
+                                <button
+                                  onClick={() => selectComment(comment.uuid)}
+                                >
+                                  <i className="fa-solid fa-pen"></i>
+                                </button>
+                                <button
+                                  onClick={() =>
+                                    deleteComment(thread.threadId, comment.uuid)
+                                  }
+                                >
+                                  <i className="fa-solid fa-trash"></i>
+                                </button>
+                              </div>
                             </>
                           )}
                         </div>

@@ -108,7 +108,7 @@ const useTipTap = () => {
     }
   };
 
-  const selectMessage = (id: string) => {
+  const selectComment = (id: string) => {
     setEditingCommentId(id);
   };
 
@@ -119,7 +119,7 @@ const useTipTap = () => {
     }
   };
 
-  const unselectMessage = (
+  const unselectComment = (
     threadId: string,
     commentId: string,
     commentText: string
@@ -136,8 +136,9 @@ const useTipTap = () => {
     editingCommentId,
     updateComment,
     setEditingCommentId,
-    selectMessage,
-    unselectMessage,
+    selectComment,
+    unselectComment,
+    deleteComment,
   };
 };
 

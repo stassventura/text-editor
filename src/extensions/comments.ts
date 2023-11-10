@@ -120,7 +120,6 @@ const Comments = Mark.create<CommentOptionsInterface, CommentsStorageInterface>(
 
             return finalComment.uuid;
           },
-        // @ts-ignore
         removeSpecificComment:
           (threadId: string, commentId: string) =>
           ({ commands }: any) => {
@@ -147,11 +146,11 @@ const Comments = Mark.create<CommentOptionsInterface, CommentsStorageInterface>(
                         (obj) => obj.threadId === comment_id
                       ).length
                     ) {
-                      this.editor.commands.setTextSelection({
+                      commands.setTextSelection({
                         from: pos,
                         to: pos + (node.text?.length || 0),
                       });
-                      this.editor.commands.unsetMark("comment");
+                      commands.unsetMark("comment");
                     }
                   }
                 });
@@ -159,8 +158,6 @@ const Comments = Mark.create<CommentOptionsInterface, CommentsStorageInterface>(
             }
             return true;
           },
-
-        //
         updateSpecificComment:
           (threadId: string, commentId: string, newCommentText: string) =>
           () => {
