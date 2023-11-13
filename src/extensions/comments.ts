@@ -1,5 +1,4 @@
 import { Mark, mergeAttributes } from "@tiptap/core";
-
 import { v4 as uuidv4 } from "uuid";
 import { findIndex } from "lodash";
 
@@ -78,10 +77,6 @@ const Comments = Mark.create<CommentOptionsInterface, CommentsStorageInterface>(
           (comment) =>
           ({ commands }) => {
             let commentsList: CustomCommentInterface;
-            console.log({
-              user: this.options.user,
-            });
-
             const finalComment: CommentInterface = {
               uuid: comment.uuid,
               user: this.options.user,

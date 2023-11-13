@@ -2,39 +2,19 @@
 @tailwind components;
 @tailwind utilities;
 
-/* :root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
-} */
-
-/* body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(to bottom, transparent, rgb(var(--background-end-rgb)))
-    rgb(var(--background-start-rgb));
-} */
 * {
   margin: 0;
   padding: 0;
 }
 ol {
   padding: 0 1rem;
-  list-style-position: outside; /* Указывает, что маркеры/нумерация должны отображаться внутри элемента списка */
-  list-style-type: decimal; /* Указывает, что нумерация для ol и маркеры для ul должны отображаться */
-  margin: 0; /* Убеждается, что нет внешних отступов, которые могут скрыть маркеры/нумерацию */
+  list-style-position: outside;
+  list-style-type: decimal;
+  margin: 0;
 }
 
 .ProseMirror {
   padding: 10px;
-  /* border: 1px solid #ee5; */
   @apply border border-accent;
   border-radius: 4px;
   outline: none;
@@ -53,7 +33,10 @@ ul li {
   gap: 4px;
   position: relative;
 }
-ul:not([data-type="taskList"]):not([data-type="heading"]) li {
+ul:not([data-type="taskList"]):not([data-type="heading"]):not(
+    [data-type="export"]
+  )
+  li {
   padding-left: 18px;
 }
 
@@ -61,7 +44,7 @@ li::marker {
   @apply text-accent;
 }
 
-ul:not([data-type="heading"]) li::before {
+ul:not([data-type="heading"]):not([data-type="export"]) li::before {
   content: "";
   display: inline-block;
   width: 8px;
@@ -93,8 +76,12 @@ ul[data-type="taskList"] li::before {
   margin: 0;
 }
 span[comment_id] {
-  @apply bg-accent text-accent-content;
+  @apply bg-accent text-accent-content cursor-pointer;
 }
+span[comment_id]:active {
+  @apply bg-accent-focus;
+}
+
 span[comment_id]::after {
   content: " 💬";
   user-select: all;

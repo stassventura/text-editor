@@ -68,6 +68,10 @@ const useTipTap = () => {
   });
 
   const [editingCommentId, setEditingCommentId] = useState<string | null>(null);
+
+  const selectComment = (id: string) => {
+    setEditingCommentId(id);
+  };
   const addComment = () => {
     if (editor) {
       const { from, to } = editor.state.selection;
@@ -108,10 +112,6 @@ const useTipTap = () => {
     }
   };
 
-  const selectComment = (id: string) => {
-    setEditingCommentId(id);
-  };
-
   const deleteComment = (threadId: string, commentId: string) => {
     if (editor) {
       editor.commands.removeSpecificComment(threadId, commentId);
@@ -125,7 +125,6 @@ const useTipTap = () => {
     commentText: string
   ) => {
     if (commentText !== "") return setEditingCommentId(null);
-    console.log(commentId);
     if (editor && threadId && commentId !== null)
       deleteComment(threadId, commentId);
   };
