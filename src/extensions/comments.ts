@@ -42,6 +42,7 @@ declare module "@tiptap/core" {
         commentId: string,
         newCommentText: string
       ) => boolean;
+      setActiveSpecificComment: (commentId: string) => boolean;
     };
   }
 }
@@ -76,6 +77,7 @@ const Comments = Mark.create<CommentOptionsInterface, CommentsStorageInterface>(
         addComments:
           (comment) =>
           ({ commands }) => {
+            const threadId = uuidv4();
             let commentsList: CustomCommentInterface;
             const finalComment: CommentInterface = {
               uuid: comment.uuid,
@@ -103,7 +105,7 @@ const Comments = Mark.create<CommentOptionsInterface, CommentsStorageInterface>(
               this.storage.comments[index].comments?.push(finalComment);
             } else {
               commentsList = {
-                threadId: uuidv4(),
+                threadId: threadId,
                 comments: [],
               };
               commentsList.comments?.push(finalComment);
@@ -113,7 +115,7 @@ const Comments = Mark.create<CommentOptionsInterface, CommentsStorageInterface>(
               this.storage.comments.push(commentsList);
             }
 
-            return finalComment.uuid;
+            return true;
           },
         removeSpecificComment:
           (threadId: string, commentId: string) =>
@@ -182,7 +184,8 @@ const Comments = Mark.create<CommentOptionsInterface, CommentsStorageInterface>(
       if (!editor.isActive("comment")) {
         this.storage.comment_id = null;
       } else {
-        this.storage.comment_id = editor.getAttributes("comment").comment_id;
+        const commentId = editor.getAttributes("comment").comment_id;
+        this.storage.comment_id = commentId;
       }
     },
     onUpdate() {},

@@ -19,8 +19,9 @@ import Document from "@tiptap/extension-document";
 import Paragraph from "@tiptap/extension-paragraph";
 import Heading from "@tiptap/extension-heading";
 import Comments from "@/extensions/comments";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
+import { findThreadIdByUuid } from "@/helpers";
 
 const useTipTap = () => {
   const editor = useEditor({
@@ -69,23 +70,48 @@ const useTipTap = () => {
 
   const [editingCommentId, setEditingCommentId] = useState<string | null>(null);
 
+  useEffect(() => {
+    if (!editor) {
+      return;
+    }
+    const checkActiveComment = () => {
+      const isActive = editor.isActive("comment");
+      if (isActive) {
+        const attrs = editor.getAttributes("comment");
+        setEditingCommentId(attrs.comment_id);
+      } else {
+        setEditingCommentId(null);
+      }
+    };
+    editor.on("selectionUpdate", checkActiveComment);
+
+    return () => {
+      editor.off("selectionUpdate", checkActiveComment);
+    };
+  }, [editor]);
+
   const selectComment = (id: string) => {
     setEditingCommentId(id);
   };
+
   const addComment = () => {
     if (editor) {
       const { from, to } = editor.state.selection;
       const quote = editor.state.doc.textBetween(from, to);
       const newCommentUuid = uuidv4();
+      const comments = editor.storage.comment.comments;
 
-      editor.commands.addComments({
+      const status = editor.commands.addComments({
         uuid: newCommentUuid,
         comment: "",
         parent_id: null,
         parent_title: quote,
       });
 
-      setEditingCommentId(newCommentUuid);
+      if (!status) return;
+      const thread = findThreadIdByUuid(comments, newCommentUuid);
+
+      if (thread) setEditingCommentId(thread);
     }
   };
 

@@ -1,6 +1,6 @@
 import useTheme from "@/hooks/useTheme";
 import React from "react";
-const themes = ["light", "dark", "retro", "bumblebee", "garden"];
+const themes = ["light", "dark", "retro"];
 
 const Themes = () => {
   const { changeTheme, theme } = useTheme();

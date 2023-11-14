@@ -3,11 +3,11 @@ import "../styles/globals.css";
 import Loader from "@/components/loader";
 import useTipTap from "@/hooks/useTipTap";
 import Toolbar from "@/components/toolbar";
-import Themes from "@/components/Themes";
 import ExportDocButton from "@/components/buttons/ExportDocButton";
 import ImportDocButton from "@/components/buttons/ImportDocButton";
 import Comment from "@/components/messages/Comment";
 import WorkSpace from "@/components/editor/WorkSpace";
+import Themes from "@/components/themes";
 
 function HomePage() {
   const {

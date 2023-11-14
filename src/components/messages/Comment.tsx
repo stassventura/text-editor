@@ -71,8 +71,7 @@ const Comment = ({
             <div className="mt-2  text-sm border-l-4 border-primary pl-4">
               {comment.parent_title}
             </div>
-
-            {editingCommentId && editingCommentId === comment.uuid ? (
+            {editingCommentId && editingCommentId === thread.threadId ? (
               <>
                 <textarea
                   autoFocus
@@ -117,7 +116,7 @@ const Comment = ({
                   {comment.comment}
                 </div>
                 <div className="absolute bottom-3 right-3 flex gap-5">
-                  <button onClick={() => selectComment(comment.uuid)}>
+                  <button onClick={() => selectComment(thread.threadId)}>
                     <i className="fa-solid fa-pen"></i>
                   </button>
                   <button

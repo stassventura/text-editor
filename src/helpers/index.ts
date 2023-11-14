@@ -1,3 +1,4 @@
+import { CustomCommentInterface } from "@/extensions/comments";
 import { IContent } from "@/types";
 
 export const getUserInitials = (firstName: string, lastName: string) => {
@@ -17,3 +18,15 @@ export const readJsonFile = (file: Blob): Promise<IContent> =>
     fileReader.onerror = (error) => reject(error);
     fileReader.readAsText(file);
   });
+
+export const findThreadIdByUuid = (
+  commentsArray: CustomCommentInterface[],
+  uuid: string
+) => {
+  for (const thread of commentsArray) {
+    if (thread.comments?.some((comment) => comment.uuid === uuid)) {
+      return thread.threadId;
+    }
+  }
+  return null;
+};
