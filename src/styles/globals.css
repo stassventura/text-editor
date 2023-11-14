@@ -1,0 +1,179 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  margin: 0;
+  padding: 0;
+}
+ol {
+  padding: 0 1rem;
+  list-style-position: outside;
+  list-style-type: decimal;
+  margin: 0;
+}
+
+.ProseMirror {
+  padding: 10px;
+  @apply border border-accent;
+  border-radius: 4px;
+  outline: none;
+}
+
+code {
+  @apply bg-base-300;
+}
+
+ul,
+ul:not([data-type="heading"]) {
+  padding-left: 5px;
+}
+ul li {
+  display: flex;
+  gap: 4px;
+  position: relative;
+}
+ul:not([data-type="taskList"]):not([data-type="heading"]):not(
+    [data-type="export"]
+  )
+  li {
+  padding-left: 18px;
+}
+
+li::marker {
+  @apply text-accent;
+}
+
+ul:not([data-type="heading"]):not([data-type="export"]) li::before {
+  content: "";
+  display: inline-block;
+  width: 8px;
+  border-radius: 50%;
+  height: 8px;
+  @apply bg-accent;
+
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 0;
+}
+
+h1 {
+  font-size: 31px;
+}
+h2 {
+  font-size: 24px;
+}
+h3 {
+  font-size: 20px;
+}
+h4 {
+  font-size: 16px;
+}
+
+ul[data-type="taskList"] li::before {
+  display: none;
+  margin: 0;
+}
+span[comment_id] {
+  @apply bg-accent text-accent-content cursor-pointer;
+}
+span[comment_id]:active {
+  @apply bg-accent-focus;
+}
+
+span[comment_id]::after {
+  content: " 💬";
+  user-select: all;
+}
+blockquote {
+  @apply border-l-2 border-accent pl-3  my-3 ml-8;
+}
+
+.loader {
+  position: relative;
+  width: 2.5em;
+  height: 2.5em;
+  transform: rotate(165deg);
+}
+
+.loader:before,
+.loader:after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  display: block;
+  width: 0.5em;
+  height: 0.5em;
+  border-radius: 0.25em;
+  transform: translate(-50%, -50%);
+}
+
+.loader:before {
+  animation: before8 2s infinite;
+}
+
+.loader:after {
+  animation: after6 2s infinite;
+}
+
+@keyframes before8 {
+  0% {
+    width: 0.5em;
+    box-shadow: 1em -0.5em rgba(225, 20, 98, 0.75),
+      -1em 0.5em rgba(111, 202, 220, 0.75);
+  }
+
+  35% {
+    width: 2.5em;
+    box-shadow: 0 -0.5em rgba(225, 20, 98, 0.75),
+      0 0.5em rgba(111, 202, 220, 0.75);
+  }
+
+  70% {
+    width: 0.5em;
+    box-shadow: -1em -0.5em rgba(225, 20, 98, 0.75),
+      1em 0.5em rgba(111, 202, 220, 0.75);
+  }
+
+  100% {
+    box-shadow: 1em -0.5em rgba(225, 20, 98, 0.75),
+      -1em 0.5em rgba(111, 202, 220, 0.75);
+  }
+}
+
+@keyframes after6 {
+  0% {
+    height: 0.5em;
+    box-shadow: 0.5em 1em rgba(61, 184, 143, 0.75),
+      -0.5em -1em rgba(233, 169, 32, 0.75);
+  }
+
+  35% {
+    height: 2.5em;
+    box-shadow: 0.5em 0 rgba(61, 184, 143, 0.75),
+      -0.5em 0 rgba(233, 169, 32, 0.75);
+  }
+
+  70% {
+    height: 0.5em;
+    box-shadow: 0.5em -1em rgba(61, 184, 143, 0.75),
+      -0.5em 1em rgba(233, 169, 32, 0.75);
+  }
+
+  100% {
+    box-shadow: 0.5em 1em rgba(61, 184, 143, 0.75),
+      -0.5em -1em rgba(233, 169, 32, 0.75);
+  }
+}
+
+.loader {
+  position: absolute;
+  top: calc(50% - 1.25em);
+  left: calc(50% - 1.25em);
+}
+
+.active-comment {
+  background: red !important;
+}

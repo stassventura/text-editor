@@ -1,5 +1,5 @@
-import React from 'react';
-import { TEditor } from '../../../types';
+import { TEditor } from "@/types";
+import React from "react";
 
 interface ColorPickerButtonProps {
   editor: TEditor;
@@ -19,7 +19,7 @@ const ColorPickerButton = ({ editor }: ColorPickerButtonProps) => {
             .setColor((event.target as HTMLInputElement).value)
             .run()
         }
-        value={editor.getAttributes('textStyle').color}
+        value={editor.getAttributes("textStyle").color}
         data-testid="setColor"
       />
     </button>

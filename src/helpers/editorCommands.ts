@@ -1,4 +1,4 @@
-import { TEditor, TEditorButton } from '../types';
+import { TEditor, TEditorButton } from "../types";
 
 interface Command {
   onclick: () => void;
@@ -9,7 +9,7 @@ type Commands = {
   [K in TEditorButton]: Command;
 };
 
-const useEditorCommands = (editor: TEditor): Commands => {
+const editorCommands = (editor: TEditor): Commands => {
   const commands = {
     bold: {
       onclick: () => editor.chain().focus().toggleBold().run(),
@@ -66,7 +66,8 @@ const useEditorCommands = (editor: TEditor): Commands => {
       },
     },
     reset: {
-      onclick: () => editor.chain().focus().unsetAllMarks().setParagraph().run(),
+      onclick: () =>
+        editor.chain().focus().unsetAllMarks().setParagraph().run(),
       active: (button: string) => {
         return editor.isActive(button);
       },
@@ -100,4 +101,4 @@ const useEditorCommands = (editor: TEditor): Commands => {
   return commands;
 };
 
-export default useEditorCommands;
+export default editorCommands;
